@@ -1,5 +1,5 @@
 config:
-  target: "http://localhost:8080"
+  target: "ws://localhost:8080"
   socketio:
     transports: ["websocket"]
   processor: "./custom.js"
