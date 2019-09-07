@@ -1,0 +1,30 @@
+config:
+  target: "ws://localhost:8080"
+  ensure:
+    max: 500 # fail if max response time exceeds 500ms
+    maxErrorRate: 1 # fail if error rate exceeds 1%
+  socketio:
+    transports: ["websocket"]
+  processor: "./custom.js" # set a custom processor to load dynamic scenario data
+  phases:
+    - duration: 120
+      arrivalRate: 10
+      rampTo: 50
+      name: "Warm up the application"
+    - duration: 600
+      arrivalRate: 50
+      name: "Sustained max load"
+scenarios:
+  - engine: "socketio"
+    flow:
+      - function: "getChatData" # load variables
+      - emit:
+          channel: "add user"
+          data: "{{ name }}"
+      - emit:
+          channel: "new message"
+          data: "{{ greeting }}"
+      - think: 10 # stay connected for 10 seconds
+      - emit:
+          channel: "new message"
+          data: "{{ goodbye }}"

@@ -2,19 +2,16 @@ config:
   target: "wss://socketio-loadtest.herokuapp.com"
   socketio:
     transports: ["websocket"]
-  processor: "./custom.js"
   phases:
-    - duration: 60 # Run scenario for 60 seconds
+    - duration: 10 # Run scenario for 10 seconds
       arrivalCount: 20 # Create 20 virtual users per scenario
 scenarios:
   - engine: "socketio"
     flow:
-      - function: "getChatData"
       - emit:
           channel: "add user"
-          data: "{{name}}"
-      - think: 5 # do nothing for 5 seconds, but remain connected
+          data: "John Doe"
       - emit:
           channel: "new message"
-          data: "{{message}}"
-      - think: 30 # do nothing for 30 seconds, then disconnect
+          data: "Hello! {{ $randomString() }}"
+      - think: 5 # do nothing for 5 seconds, then disconnect
