@@ -1,0 +1,20 @@
+config:
+  target: "http://localhost:8080"
+  socketio:
+    transports: ["websocket"]
+  processor: "./custom.js"
+  phases:
+    - duration: 60 # Run scenario for 60 seconds
+      arrivalCount: 20 # Create 20 virtual users per scenario
+scenarios:
+  - engine: "socketio"
+    flow:
+      - function: "getChatData"
+      - emit:
+          channel: "add user"
+          data: "{{name}}"
+      - think: 5 # do nothing for 5 seconds, but remain connected
+      - emit:
+          channel: "new message"
+          data: "{{message}}"
+      - think: 30 # do nothing for 30 seconds, then disconnect
