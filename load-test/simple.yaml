@@ -1,5 +1,5 @@
 config:
-  target: "ws://localhost:8080"
+  target: "wss://socketio-loadtest.herokuapp.com"
   socketio:
     transports: ["websocket"]
   processor: "./custom.js"
