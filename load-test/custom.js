@@ -1,4 +1,4 @@
-const faker = require('faker');
+const {faker} = require('@faker-js/faker');
 
 module.exports.getChatData = (userContext, events, done) => {
   userContext.vars.name = faker.name.findName();
